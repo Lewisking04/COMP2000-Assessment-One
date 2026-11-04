@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brand">#1F5F8B</color>
+    <color name="brand_dark">#163F5C</color>
+    <color name="white">#FFFFFF</color>
+    <color name="background">#F4F6F8</color>
+    <color name="text_primary">#1B1F23</color>
+    <color name="text_secondary">#5A646E</color>
+    <color name="divider">#D6DBE0</color>
+    <color name="error_text">#B3261E</color>
+    <!-- Status chips: the text carries the meaning, colour just helps -->
+    <color name="status_pending">#FFE9A8</color>
+    <color name="status_confirmed">#CDEBD3</color>
+    <color name="status_cancellation">#FAD4C0</color>
+</resources>

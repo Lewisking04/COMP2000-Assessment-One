@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Room Booking</string>
+
+    <!-- Login -->
+    <string name="login_title">Room Booking</string>
+    <string name="login_subtitle">Sign in with your work account</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="login_button">Log in</string>
+    <string name="login_demo_hint">Demo sign-in: any username, password demo1234</string>
+    <string name="error_username_required">Enter your username</string>
+    <string name="error_password_required">Enter your password</string>
+    <string name="error_wrong_credentials">Wrong username or password</string>
+    <string name="logo_description">Room Booking app logo</string>
+
+    <!-- Navigation -->
+    <string name="nav_find_room">Find a room</string>
+    <string name="nav_my_bookings">My bookings</string>
+    <string name="action_logout">Log out</string>
+    <string name="back">Back</string>
+
+    <!-- Find a room -->
+    <string name="find_heading">When do you need a room?</string>
+    <string name="date">Date</string>
+    <string name="start_time">Start time</string>
+    <string name="duration">Duration</string>
+    <string name="duration_30">30 min</string>
+    <string name="duration_60">1 hour</string>
+    <string name="duration_120">2 hours</string>
+    <string name="duration_180">3 hours</string>
+    <string name="pick_date">Choose a date</string>
+    <string name="pick_time">Choose a start time</string>
+    <string name="summary_hint">Rooms free at this time will be shown</string>
+    <string name="summary_format">%1$s, %2$s – %3$s</string>
+    <string name="show_free_rooms">Show free rooms</string>
+    <string name="rooms_hint">Choose a time and tap Show free rooms</string>
+    <string name="error_weekend">Rooms can only be booked Monday to Friday</string>
+    <string name="error_half_hour">Choose a time on the hour or half hour</string>
+    <string name="error_opening_hours">Rooms can be booked from 08:00 to 17:30</string>
+    <string name="error_too_late">The booking must finish by 18:00. Choose an earlier start or a shorter time</string>
+    <string name="calendar_description">Open calendar</string>
+    <string name="clock_description">Open clock</string>
+
+    <!-- Free rooms -->
+    <string name="free_rooms_title">Free rooms</string>
+    <string name="slot_format">%1$s · %2$s – %3$s</string>
+    <string name="change">Change</string>
+    <string name="rooms_free_count">%1$d of %2$d rooms free</string>
+    <string name="rooms_footnote">Booked rooms are not shown</string>
+    <string name="no_rooms_free">No rooms are free at this time. Try another time.</string>
+    <string name="request">Request</string>
+
+    <!-- Confirm request -->
+    <string name="confirm_title">Confirm request</string>
+    <string name="time_range_duration">%1$s – %2$s (%3$.1f h)</string>
+    <string name="requested_by_you">Requested by: you</string>
+    <string name="hint_purpose">Purpose (optional)</string>
+    <string name="confirm_note">A manager will review your request. You will see its status in My bookings.</string>
+    <string name="send_request">Send request</string>
+    <string name="back_to_rooms">Back to rooms</string>
+
+    <!-- Request sent -->
+    <string name="sent_title">Request sent</string>
+    <string name="sent_details">%1$s · %2$s · %3$s – %4$s</string>
+    <string name="status_pending_approval">Pending approval</string>
+    <string name="sent_note">You will see the decision in My bookings.</string>
+    <string name="view_my_bookings">View my bookings</string>
+    <string name="find_another_room">Find another room</string>
+    <string name="success_description">Success</string>
+
+    <!-- Room unavailable -->
+    <string name="unavailable_toolbar">Room unavailable</string>
+    <string name="unavailable_title">%1$s was just booked</string>
+    <string name="unavailable_message">It is no longer free on %1$s, %2$s – %3$s.</string>
+    <string name="still_free_heading">Still free at %1$s – %2$s</string>
+    <string name="next_free">%1$s is free from %2$s</string>
+    <string name="change_date_time">Change date or time</string>
+    <string name="warning_description">Warning</string>
+
+    <!-- My bookings -->
+    <string name="tab_upcoming">Upcoming</string>
+    <string name="tab_past">Past</string>
+    <string name="empty_upcoming">Nothing coming up</string>
+    <string name="empty_past">No past bookings</string>
+    <string name="booking_when">%1$s · %2$s–%3$s</string>
+    <string name="status_pending">Pending</string>
+    <string name="status_confirmed">Confirmed</string>
+    <string name="status_cancellation_requested">Cancellation requested</string>
+    <string name="withdraw">Withdraw</string>
+    <string name="ask_to_cancel">Ask to cancel</string>
+    <string name="keep_booking">Keep booking</string>
+    <string name="dialog_withdraw_title">Withdraw request?</string>
+    <string name="dialog_withdraw_message">%1$s: the request will be removed. You can request the room again later.</string>
+    <string name="dialog_cancel_title">Ask to cancel?</string>
+    <string name="dialog_cancel_message">%1$s: this sends a cancellation request to a manager. The booking stays until they approve it.</string>
+    <string name="message_withdrawn">Request withdrawn</string>
+    <string name="message_cancellation_requested">Cancellation requested</string>
+</resources>

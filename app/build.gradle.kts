@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.comp2000roombookingapp"
-        minSdk = 26   // java.time (dates and times in the demo data) needs API 26; the labs use 21
+        minSdk = 26   // java.time (dates and times in the demo data) needs API 26
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
@@ -37,7 +37,7 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.constraintlayout)
     implementation(libs.material)
-    implementation(libs.recyclerview)   // Lecture 7 / Lab 7
+    implementation(libs.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
