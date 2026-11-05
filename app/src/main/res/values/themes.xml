@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- The options menu only shows if the theme has an action bar, so this is not a NoActionBar theme. -->
-    <style name="Theme.RoomBooking" parent="Theme.Material3.DayNight">
+    <!-- The menu needs a theme with an action bar, so this is not a NoActionBar theme. -->
+    <style name="Theme.COMP2000RoomBookingApp" parent="Theme.Material3.Light">
         <item name="colorPrimary">@color/accent</item>
         <item name="colorOnPrimary">@color/on_accent</item>
         <item name="android:windowBackground">@color/screen_bg</item>

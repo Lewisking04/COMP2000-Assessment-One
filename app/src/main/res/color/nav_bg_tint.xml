@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Colour state list. The selected navigation button is dark, the other is light grey. -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_selected="true" android:color="@color/nav_selected" />
     <item android:color="@color/nav_unselected" />

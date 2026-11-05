@@ -1,4 +1,4 @@
-package com.example.roombooking;
+package com.example.comp2000roombookingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
-/** Room no longer free screen. Explains what happened and offers other rooms or a new time. */
+/** Room no longer free screen. Shows other free rooms and when the first choice is next free. */
 public class RoomUnavailableActivity extends AppCompatActivity {
 
     private static final DateTimeFormatter SHORT_DAY = DateTimeFormatter.ofPattern("EEE d MMM", Locale.UK);
@@ -27,7 +27,7 @@ public class RoomUnavailableActivity extends AppCompatActivity {
         setContentView(R.layout.activity_room_unavailable);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Intent in = getIntent();
+        final Intent in = getIntent();
         LocalDate date = LocalDate.parse(in.getStringExtra(Extras.DATE));
         LocalTime start = LocalTime.parse(in.getStringExtra(Extras.START));
         int minutes = in.getIntExtra(Extras.DURATION, 60);
@@ -40,22 +40,26 @@ public class RoomUnavailableActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.tv_alt_heading)).setText(
                 getString(R.string.still_free_heading, start.toString(), end.toString()));
 
-        // Other rooms for the same slot (not the one that failed)
+        // Other rooms for the same slot (not the one that failed). This reuses RoomAdapter;
+        // code as Free rooms; tapping a room goes to Confirm request with the new room.
         List<Room> alternatives = DemoData.freeRooms(date, start, end);
         alternatives.remove(room);
-        RoomAdapter adapter = new RoomAdapter(chosen -> {
-            Intent next = new Intent(RoomUnavailableActivity.this, ConfirmRequestActivity.class);
-            next.putExtras(in);
-            next.putExtra(Extras.ROOM_ID, chosen.id);
-            startActivity(next);
-            finish();
+        RoomAdapter adapter = new RoomAdapter(new RoomAdapter.OnRoomClickListener() {
+            @Override
+            public void onRoomClick(Room chosen) {
+                Intent confirm = new Intent(RoomUnavailableActivity.this, ConfirmRequestActivity.class);
+                confirm.putExtras(in);
+                confirm.putExtra(Extras.ROOM_ID, chosen.id);
+                startActivity(confirm);
+                finish();
+            }
         });
         RecyclerView list = findViewById(R.id.rooms_list);
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(adapter);
         adapter.submit(alternatives);
 
-        // Say when the first-choice room is free again
+        // Tell the user when the first-choice room is next free for the same length. The line stays hidden if never.
         TextView tvNext = findViewById(R.id.tv_next_free);
         LocalTime next = DemoData.nextFreeStart(room, date, end, minutes);
         if (next != null) {
@@ -63,11 +67,13 @@ public class RoomUnavailableActivity extends AppCompatActivity {
             tvNext.setVisibility(View.VISIBLE);
         }
 
-        findViewById(R.id.btn_change).setOnClickListener(v -> {
-            Intent i = new Intent(RoomUnavailableActivity.this, MainActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(i);
-            finish();
+        // "Change date or time": open the home screen again, which starts on Find a room, and close this one.
+        findViewById(R.id.btn_change).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RoomUnavailableActivity.this, MainActivity.class));
+                finish();
+            }
         });
     }
 

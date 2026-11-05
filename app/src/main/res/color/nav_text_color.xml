@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Text colour for the navigation buttons: white on the dark selected button, dark on the light unselected one.
+-->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_selected="true" android:color="@color/on_accent" />
     <item android:color="@color/text_primary" />

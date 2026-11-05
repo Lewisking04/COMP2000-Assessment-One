@@ -1,4 +1,4 @@
-package com.example.roombooking;
+package com.example.comp2000roombookingapp;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,9 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/** Adapter for the My bookings list. Each row shows the status and a button that depends on it. */
+/** Adapter for the My bookings list. The button on each row depends on the booking's status. */
 public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHolder> {
 
+    // The fragment says what happens when the row's button is tapped
     public interface OnActionListener {
         void onAction(Booking booking);
     }
@@ -51,6 +52,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         h.name.setText(b.room.name);
         h.when.setText(c.getString(R.string.booking_when, b.date.format(DAY), b.start.toString(), b.end.toString()));
 
+        // Pick the wording and coloured background for the status label
         int label;
         int background;
         switch (b.status) {
@@ -70,6 +72,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         h.status.setText(label);
         h.status.setBackgroundResource(background);
 
+        // Decide which button this row gets: Withdraw for pending, Request cancel for confirmed, none for the rest.
+        // 0 means "no button". Past bookings never get a button.
         int action = 0;
         if (!b.isPast()) {
             if (b.status == Booking.Status.PENDING) action = R.string.withdraw;

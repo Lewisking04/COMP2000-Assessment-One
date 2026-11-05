@@ -8,7 +8,7 @@
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
     <string name="login_button">Log in</string>
-    <string name="login_demo_hint">Demo sign-in: any username, password demo1234</string>
+    <string name="login_demo_hint">Demo sign-in: password demo1234. Username manager opens the manager screens; any other username opens the employee screens</string>
     <string name="error_username_required">Enter your username</string>
     <string name="error_password_required">Enter your password</string>
     <string name="error_wrong_credentials">Wrong username or password</string>
@@ -34,8 +34,8 @@
     <string name="rooms_hint">Choose a time and tap Show free rooms</string>
     <string name="error_weekend">Rooms can only be booked Monday to Friday</string>
     <string name="error_half_hour">Choose a time on the hour or half hour</string>
-    <string name="error_opening_hours">Rooms can be booked from 09:00 to 15:00</string>
-    <string name="error_too_late">The booking must finish by 15:00. Choose an earlier start or a shorter time</string>
+    <string name="error_opening_hours">Rooms can be booked from 09:00 to 17:00</string>
+    <string name="error_too_late">The booking must finish by 17:00. Choose an earlier start or a shorter time</string>
 
     <!-- Free rooms -->
     <string name="free_rooms_title">Free rooms</string>
@@ -95,4 +95,70 @@
     <string name="dialog_cancel_message">%1$s: this sends a cancellation request to a manager. The booking stays until they approve it.</string>
     <string name="message_withdrawn">Request withdrawn</string>
     <string name="message_cancellation_requested">Cancellation requested</string>
+
+    <!-- Manager screens -->
+    <string name="mgr_nav_rooms">All rooms</string>
+    <string name="mgr_nav_requests">Requests (%1$d)</string>
+    <string name="mgr_title_rooms">All rooms (manager)</string>
+    <string name="mgr_title_requests">Requests (manager)</string>
+    <string name="previous_day">Previous day</string>
+    <string name="next_day">Next day</string>
+    <string name="earlier">Earlier</string>
+    <string name="later">Later</string>
+    <string name="mgr_hour_format">%1$s – %2$s</string>
+    <string name="error_day_range">Choose a working day from today up to 29 days ahead</string>
+    <string name="status_vacant">Vacant</string>
+    <string name="legend_booked">Booked</string>
+    <string name="status_booked_until">Booked until %1$s</string>
+    <string name="booked_by">Booked by %1$s</string>
+    <string name="book_a_room">Book a room</string>
+    <string name="room_detail_title">Room detail</string>
+    <string name="review_title">Review request</string>
+
+    <!-- Requests and Review request -->
+    <string name="tab_bookings_count">Bookings (%1$d)</string>
+    <string name="tab_cancellations_count">Cancellations (%1$d)</string>
+    <string name="requests_empty">No requests are waiting</string>
+    <string name="requested_by">Requested by: %1$s</string>
+    <string name="request_type_booking">Booking request</string>
+    <string name="request_type_cancellation">Cancellation request</string>
+    <string name="review">Review</string>
+    <string name="approve">Approve</string>
+    <string name="reject">Reject</string>
+    <string name="review_when">%1$s · %2$s – %3$s</string>
+    <string name="clash_none">Clash check: no clash. The room is free for this time.</string>
+    <string name="clash_found">Clash check: clash. The room is booked by %1$s from %2$s to %3$s, so this request cannot be approved.</string>
+    <string name="clash_cancellation_note">Clash check: not needed. Approving removes this booking and frees the room.</string>
+    <string name="hint_reason">Reason for rejecting (optional)</string>
+    <string name="reason_note">Optional. In the full system the reason will be sent to the employee.</string>
+    <string name="message_approved">Request approved</string>
+    <string name="message_rejected">Request rejected</string>
+    <string name="message_clash">Clash: the room is no longer free, so it was not approved</string>
+
+    <!-- Room detail and the manager Cancel dialog -->
+    <string name="detail_vacant">Vacant %1$s – %2$s</string>
+    <string name="detail_booked">Booked %1$s – %2$s by %3$s</string>
+    <string name="timeline_heading">Bookings on %1$s</string>
+    <string name="timeline_line">%1$s – %2$s · %3$s</string>
+    <string name="timeline_empty">No bookings on this day</string>
+    <string name="no_booking_selected">Tap a booking in the list to see its details.</string>
+    <string name="selected_booking_format">Booked by %1$s, %2$s – %3$s. Purpose: %4$s</string>
+    <string name="cancel_booking">Cancel booking</string>
+    <string name="book_another_time">Book another time</string>
+    <string name="dialog_manager_cancel_title">Cancel this booking?</string>
+    <string name="dialog_manager_cancel_message">%1$s, %2$s – %3$s, booked by %4$s. The room becomes free straight away.</string>
+    <string name="message_booking_cancelled">Booking cancelled</string>
+
+    <!-- Book a room -->
+    <string name="room">Room</string>
+    <string name="book_for">Book for</string>
+    <string name="book_for_me">Me</string>
+    <string name="book_for_other">Another user</string>
+    <string name="employee_helper">Type a name to search for the employee this booking is for</string>
+    <string name="hint_employee">Employee name</string>
+    <string name="error_employee_unknown">Choose a name from the list</string>
+    <string name="book_free">Free: %1$s is free on %2$s, %3$s – %4$s.</string>
+    <string name="book_clash">Clash: %1$s is booked by %2$s from %3$s to %4$s. Choose another room or time.</string>
+    <string name="confirm_booking">Confirm booking</string>
+    <string name="message_booking_confirmed">Booking confirmed</string>
 </resources>

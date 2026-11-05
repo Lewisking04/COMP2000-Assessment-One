@@ -4,11 +4,13 @@
     <!-- The manifest lists every screen. No permissions are needed. -->
     <application
         android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RoomBooking">
+        android:theme="@style/Theme.COMP2000RoomBookingApp">
 
         <!-- Launcher activity (the first screen) -->
         <activity
@@ -25,6 +27,23 @@
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/nav_find_room" />
+        <!-- Manager home (login with the username manager) -->
+        <activity
+            android:name=".ManagerActivity"
+            android:exported="false"
+            android:label="@string/mgr_title_rooms" />
+        <activity
+            android:name=".RoomDetailActivity"
+            android:exported="false"
+            android:label="@string/room_detail_title" />
+        <activity
+            android:name=".BookRoomActivity"
+            android:exported="false"
+            android:label="@string/book_a_room" />
+        <activity
+            android:name=".ReviewRequestActivity"
+            android:exported="false"
+            android:label="@string/review_title" />
         <activity
             android:name=".FreeRoomsActivity"
             android:exported="false"

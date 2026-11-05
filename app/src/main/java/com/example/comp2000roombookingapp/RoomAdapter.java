@@ -1,4 +1,4 @@
-package com.example.roombooking;
+package com.example.comp2000roombookingapp;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Adapter for a list of free rooms. Used on a few different screens. */
+/** Adapter for the list of free rooms. Used on a few screens. */
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
 
+    // The screen passes in a listener to decide what a tap does, so one adapter works on three screens.
     public interface OnRoomClickListener {
         void onRoomClick(Room room);
     }
@@ -26,12 +27,14 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
         this.listener = listener;
     }
 
+    /** Gives the adapter a new list of rooms and tells the RecyclerView to redraw. */
     public void submit(List<Room> newRooms) {
         rooms.clear();
         rooms.addAll(newRooms);
         notifyDataSetChanged();
     }
 
+    // Step 1: build an empty row from the XML layout.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -39,6 +42,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
         return new ViewHolder(v);
     }
 
+    // Step 2: fill a row with the data for this position.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Room room = rooms.get(position);
@@ -55,11 +59,13 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
         });
     }
 
+    // The RecyclerView asks how many rows there are.
     @Override
     public int getItemCount() {
         return rooms.size();
     }
 
+    // The ViewHolder keeps one row's views so they are not looked up again each time.
     static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView name;
         final TextView details;

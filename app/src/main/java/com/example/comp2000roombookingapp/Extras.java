@@ -1,6 +1,6 @@
-package com.example.roombooking;
+package com.example.comp2000roombookingapp;
 
-/** Keys for the data passed between screens. */
+/** Keys for the data passed between screens (putExtra and getStringExtra). */
 public final class Extras {
     private Extras() { }
 
