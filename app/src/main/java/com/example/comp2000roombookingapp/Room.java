@@ -23,6 +23,6 @@ public class Room {
 
     /** Short line shown under the room name, e.g. Meeting room, 6 seats. */
     public String details() {
-        return typeLabel() + " \u00B7 " + seats + " seats";
+        return typeLabel() + ", " + seats + " seats";
     }
 }
