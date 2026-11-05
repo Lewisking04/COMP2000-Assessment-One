@@ -12,9 +12,10 @@ import java.util.List;
 public final class DemoData {
     private DemoData() { }
 
-    public static final LocalTime OPEN = LocalTime.of(8, 0);
-    public static final LocalTime CLOSE = LocalTime.of(18, 0);
-    public static final LocalTime LAST_START = LocalTime.of(17, 30);
+    public static final LocalTime OPEN = LocalTime.of(9, 0);          // 09:00 to 15:00
+    public static final LocalTime CLOSE = LocalTime.of(15, 0);
+    public static final LocalTime LAST_START = LocalTime.of(14, 30);   // latest start: a 30-minute booking ends at 15:00
+    public static final int MAX_DAYS_AHEAD = 29;                        // less than 30 days ahead
 
     public static final List<Room> ROOMS = new ArrayList<>();
     private static final List<Block> BUSY = new ArrayList<>();
@@ -41,8 +42,8 @@ public final class DemoData {
 
         // Other people's bookings
         BUSY.add(new Block(find("R2"), null, LocalTime.of(13, 30), LocalTime.of(15, 0)));
-        BUSY.add(new Block(find("R4"), null, LocalTime.of(14, 0), LocalTime.of(16, 0)));
-        BUSY.add(new Block(find("S1"), null, LocalTime.of(10, 0), LocalTime.of(12, 0)));
+        BUSY.add(new Block(find("R5"), null, LocalTime.of(14, 0), LocalTime.of(15, 0)));
+        BUSY.add(new Block(find("S1"), null, LocalTime.of(13, 0), LocalTime.of(15, 0)));
 
         // This employee's bookings
         LocalDate today = LocalDate.now();
@@ -129,6 +130,14 @@ public final class DemoData {
             return c != 0 ? c : a.start.compareTo(b.start);
         });
         return out;
+    }
+
+    /** The employee's booking with this id, or null if it was withdrawn. */
+    public static Booking findBooking(long id) {
+        for (Booking b : MY_BOOKINGS) {
+            if (b.id == id) return b;
+        }
+        return null;
     }
 
     public static void withdraw(Booking b) {

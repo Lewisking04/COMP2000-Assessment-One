@@ -2,14 +2,13 @@ package com.example.roombooking;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.appbar.MaterialToolbar;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -26,9 +25,7 @@ public class RoomUnavailableActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_unavailable);
-
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent in = getIntent();
         LocalDate date = LocalDate.parse(in.getStringExtra(Extras.DATE));
@@ -47,12 +44,12 @@ public class RoomUnavailableActivity extends AppCompatActivity {
         List<Room> alternatives = DemoData.freeRooms(date, start, end);
         alternatives.remove(room);
         RoomAdapter adapter = new RoomAdapter(chosen -> {
-            Intent next = new Intent(this, ConfirmRequestActivity.class);
+            Intent next = new Intent(RoomUnavailableActivity.this, ConfirmRequestActivity.class);
             next.putExtras(in);
             next.putExtra(Extras.ROOM_ID, chosen.id);
             startActivity(next);
             finish();
-        }, getString(R.string.request));
+        });
         RecyclerView list = findViewById(R.id.rooms_list);
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(adapter);
@@ -67,10 +64,19 @@ public class RoomUnavailableActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.btn_change).setOnClickListener(v -> {
-            Intent i = new Intent(this, MainActivity.class);
+            Intent i = new Intent(RoomUnavailableActivity.this, MainActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(i);
             finish();
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

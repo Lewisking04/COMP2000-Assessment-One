@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- The manifest lists every screen. No permissions are needed. -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,34 +10,36 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RoomBooking">
 
+        <!-- Launcher activity (the first screen) -->
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- singleTop: reuse the open screen instead of making a new one -->
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:launchMode="singleTop" />
+            android:label="@string/nav_find_room" />
         <activity
             android:name=".FreeRoomsActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:label="@string/free_rooms_title" />
         <activity
             android:name=".ConfirmRequestActivity"
             android:exported="false"
-            android:parentActivityName=".FreeRoomsActivity" />
+            android:label="@string/confirm_title" />
         <activity
             android:name=".RequestSentActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/sent_title" />
         <activity
             android:name=".RoomUnavailableActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/unavailable_toolbar" />
     </application>
-
 </manifest>

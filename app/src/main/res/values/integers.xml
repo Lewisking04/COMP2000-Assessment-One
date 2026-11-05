@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Columns in My bookings: 1 on a phone, 2 on wide screens -->
-    <integer name="booking_columns">1</integer>
-</resources>

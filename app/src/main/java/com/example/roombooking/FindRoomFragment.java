@@ -1,9 +1,17 @@
 package com.example.roombooking;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,27 +19,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.DateValidatorPointForward;
-import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.android.material.timepicker.MaterialTimePicker;
-import com.google.android.material.timepicker.TimeFormat;
 
 import java.time.DayOfWeek;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-/** Find a room screen. Pick a date, start time and length, then see the free rooms. */
+/** Find a room screen. Pick a date, start time and length. Portrait opens Free rooms, landscape shows the list beside the form. */
 public class FindRoomFragment extends Fragment {
 
     private static final DateTimeFormatter DAY = DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.UK);
@@ -42,31 +40,33 @@ public class FindRoomFragment extends Fragment {
     private LocalTime start;
     private int durationMinutes = 60;
 
-    private TextInputEditText etDate;
-    private TextInputEditText etStart;
+    private Button btnDate;
+    private Button btnStart;
+    private RadioGroup rgDuration;
     private TextView tvSummary;
 
-    // Only in the wide (two-pane) layout
+    // These only exist in layout-land (the second pane)
     private RecyclerView roomsList;
     private TextView tvRoomsCount;
     private TextView tvRoomsEmpty;
     private RoomAdapter adapter;
 
-    public FindRoomFragment() {
-        super(R.layout.fragment_find_room);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_find_room, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        etDate = view.findViewById(R.id.et_date);
-        etStart = view.findViewById(R.id.et_start);
+        btnDate = view.findViewById(R.id.btn_date);
+        btnStart = view.findViewById(R.id.btn_start);
+        rgDuration = view.findViewById(R.id.rg_duration);
         tvSummary = view.findViewById(R.id.tv_summary);
-        TextInputLayout dateLayout = view.findViewById(R.id.date_layout);
-        TextInputLayout startLayout = view.findViewById(R.id.start_layout);
-        ChipGroup chips = view.findViewById(R.id.chip_duration);
-        MaterialButton btnShow = view.findViewById(R.id.btn_show_rooms);
+        Button btnShow = view.findViewById(R.id.btn_show_rooms);
 
         // Sensible defaults: the next working day at 14:00 for one hour
         date = nextWorkingDay(LocalDate.now().plusDays(1));
@@ -77,28 +77,23 @@ public class FindRoomFragment extends Fragment {
             durationMinutes = savedInstanceState.getInt("duration", 60);
         }
 
-        etDate.setOnClickListener(v -> pickDate());
-        dateLayout.setEndIconOnClickListener(v -> pickDate());
-        etStart.setOnClickListener(v -> pickTime());
-        startLayout.setEndIconOnClickListener(v -> pickTime());
+        btnDate.setOnClickListener(v -> pickDate());
+        btnStart.setOnClickListener(v -> pickTime());
 
-        chips.check(chipIdFor(durationMinutes));
-        chips.setOnCheckedStateChangeListener((group, checkedIds) -> {
-            if (checkedIds.isEmpty()) return;
-            int id = checkedIds.get(0);
-            if (id == R.id.chip_30) durationMinutes = 30;
-            else if (id == R.id.chip_60) durationMinutes = 60;
-            else if (id == R.id.chip_120) durationMinutes = 120;
-            else if (id == R.id.chip_180) durationMinutes = 180;
+        rgDuration.check(radioIdFor(durationMinutes));
+        rgDuration.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rb_30) durationMinutes = 30;
+            else if (checkedId == R.id.rb_60) durationMinutes = 60;
+            else if (checkedId == R.id.rb_120) durationMinutes = 120;
+            else if (checkedId == R.id.rb_180) durationMinutes = 180;
             updateSummary();
         });
 
-        // Two-pane views only exist in layout-w600dp
-        roomsList = view.findViewById(R.id.rooms_list);
+        roomsList = view.findViewById(R.id.rooms_list);          // null in portrait
         tvRoomsCount = view.findViewById(R.id.tv_rooms_count);
         tvRoomsEmpty = view.findViewById(R.id.tv_rooms_empty);
         if (roomsList != null) {
-            adapter = new RoomAdapter(room -> openConfirm(room), getString(R.string.request));
+            adapter = new RoomAdapter(room -> openConfirm(room));
             roomsList.setLayoutManager(new LinearLayoutManager(requireContext()));
             roomsList.setAdapter(adapter);
         }
@@ -115,12 +110,12 @@ public class FindRoomFragment extends Fragment {
         outState.putInt("duration", durationMinutes);
     }
 
-    private int chipIdFor(int minutes) {
+    private int radioIdFor(int minutes) {
         switch (minutes) {
-            case 30: return R.id.chip_30;
-            case 120: return R.id.chip_120;
-            case 180: return R.id.chip_180;
-            default: return R.id.chip_60;
+            case 30: return R.id.rb_30;
+            case 120: return R.id.rb_120;
+            case 180: return R.id.rb_180;
+            default: return R.id.rb_60;
         }
     }
 
@@ -131,58 +126,48 @@ public class FindRoomFragment extends Fragment {
         return d;
     }
 
+    /** Date picker limited to today and the next 29 days, Monday to Friday. */
     private void pickDate() {
-        long todayUtc = MaterialDatePicker.todayInUtcMilliseconds();
-        // Bookings can be made from today up to 30 days ahead
-        CalendarConstraints constraints = new CalendarConstraints.Builder()
-                .setStart(todayUtc)
-                .setEnd(todayUtc + 30L * 24 * 60 * 60 * 1000)
-                .setValidator(DateValidatorPointForward.from(todayUtc))
-                .build();
-        MaterialDatePicker<Long> picker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText(R.string.pick_date)
-                .setSelection(date.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli())
-                .setCalendarConstraints(constraints)
-                .build();
-        picker.addOnPositiveButtonClickListener(selection -> {
-            LocalDate chosen = Instant.ofEpochMilli(selection).atZone(ZoneOffset.UTC).toLocalDate();
-            if (chosen.getDayOfWeek() == DayOfWeek.SATURDAY || chosen.getDayOfWeek() == DayOfWeek.SUNDAY) {
-                message(R.string.error_weekend);
-                return;
-            }
-            date = chosen;
-            updateSummary();
-        });
-        picker.show(getParentFragmentManager(), "date_picker");
+        DatePickerDialog dialog = new DatePickerDialog(requireContext(),
+                (DatePicker picker, int year, int month, int dayOfMonth) -> {
+                    LocalDate chosen = LocalDate.of(year, month + 1, dayOfMonth);
+                    if (chosen.getDayOfWeek() == DayOfWeek.SATURDAY
+                            || chosen.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                        message(R.string.error_weekend);
+                        return;
+                    }
+                    date = chosen;
+                    updateSummary();
+                }, date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth());
+        Calendar min = Calendar.getInstance();
+        Calendar max = Calendar.getInstance();
+        max.add(Calendar.DAY_OF_YEAR, DemoData.MAX_DAYS_AHEAD);
+        dialog.getDatePicker().setMinDate(min.getTimeInMillis() - 1000);
+        dialog.getDatePicker().setMaxDate(max.getTimeInMillis());
+        dialog.show();
     }
 
     private void pickTime() {
-        MaterialTimePicker picker = new MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_24H)
-                .setHour(start.getHour())
-                .setMinute(start.getMinute())
-                .setTitleText(R.string.pick_time)
-                .build();
-        picker.addOnPositiveButtonClickListener(v -> {
-            int minute = picker.getMinute();
-            if (minute != 0 && minute != 30) {
-                message(R.string.error_half_hour);
-                return;
-            }
-            LocalTime chosen = LocalTime.of(picker.getHour(), minute);
-            if (chosen.isBefore(DemoData.OPEN) || chosen.isAfter(DemoData.LAST_START)) {
-                message(R.string.error_opening_hours);
-                return;
-            }
-            start = chosen;
-            updateSummary();
-        });
-        picker.show(getParentFragmentManager(), "time_picker");
+        TimePickerDialog dialog = new TimePickerDialog(requireContext(),
+                (TimePicker picker, int hour, int minute) -> {
+                    if (minute != 0 && minute != 30) {
+                        message(R.string.error_half_hour);          // say what is wrong and how to fix it
+                        return;
+                    }
+                    LocalTime chosen = LocalTime.of(hour, minute);
+                    if (chosen.isBefore(DemoData.OPEN) || chosen.isAfter(DemoData.LAST_START)) {
+                        message(R.string.error_opening_hours);
+                        return;
+                    }
+                    start = chosen;
+                    updateSummary();
+                }, start.getHour(), start.getMinute(), true);
+        dialog.show();
     }
 
     private void updateSummary() {
-        etDate.setText(date.format(DAY));
-        etStart.setText(start.format(TIME));
+        btnDate.setText(date.format(DAY));
+        btnStart.setText(start.format(TIME));
         LocalTime end = start.plusMinutes(durationMinutes);
         tvSummary.setText(getString(R.string.summary_format, date.format(SHORT_DAY),
                 start.format(TIME), end.format(TIME)));
@@ -191,11 +176,11 @@ public class FindRoomFragment extends Fragment {
     private void showFreeRooms() {
         LocalTime end = start.plusMinutes(durationMinutes);
         if (end.isAfter(DemoData.CLOSE)) {
-            message(R.string.error_too_late);   // say what is wrong and how to fix it
+            message(R.string.error_too_late);
             return;
         }
         if (roomsList == null) {
-            // Phone portrait: the list opens as its own screen
+            // Portrait: the list is its own screen. The values go in the Intent as extras.
             Intent i = new Intent(requireContext(), FreeRoomsActivity.class);
             i.putExtra(Extras.DATE, date.toString());
             i.putExtra(Extras.START, start.toString());
@@ -218,6 +203,7 @@ public class FindRoomFragment extends Fragment {
         startActivity(i);
     }
 
+    /** Snackbar message. */
     private void message(int resId) {
         Snackbar.make(requireView(), resId, Snackbar.LENGTH_LONG).show();
     }

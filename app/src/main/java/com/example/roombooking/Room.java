@@ -14,7 +14,7 @@ public class Room {
         this.seats = seats;
     }
 
-    /** Text label for the room type. Type is not shown by colour alone. */
+    /** Text label for the room type. */
     public String typeLabel() {
         return seminar ? "Seminar room" : "Meeting room";
     }

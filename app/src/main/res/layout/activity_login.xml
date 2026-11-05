@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Login, portrait. In a ScrollView so the keyboard does not hide the button. -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -14,87 +13,72 @@
         android:padding="24dp">
 
         <ImageView
-            android:layout_width="88dp"
-            android:layout_height="88dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_marginTop="48dp"
             android:contentDescription="@string/logo_description"
-            android:src="@drawable/ic_event_note"
-            app:tint="@color/brand" />
+            android:src="@android:drawable/ic_menu_my_calendar" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:text="@string/login_title"
-            android:textAppearance="?attr/textAppearanceHeadlineMedium"
-            android:textColor="@color/text_primary" />
+            android:textColor="@color/text_primary"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:layout_marginBottom="28dp"
             android:text="@string/login_subtitle"
-            android:textAppearance="?attr/textAppearanceBodyMedium"
-            android:textColor="@color/text_secondary" />
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/user_layout"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        <EditText
+            android:id="@+id/et_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_username">
+            android:layout_marginTop="32dp"
+            android:autofillHints="username"
+            android:hint="@string/hint_username"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_user"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:minHeight="48dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/pass_layout"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        <EditText
+            android:id="@+id/et_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
+            android:autofillHints="password"
             android:hint="@string/hint_password"
-            app:endIconMode="password_toggle">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_pass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:minHeight="48dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:inputType="textPassword"
+            android:minHeight="48dp" />
 
         <TextView
             android:id="@+id/tv_login_error"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/error_wrong_credentials"
-            android:textAppearance="?attr/textAppearanceBodyMedium"
             android:textColor="@color/error_text"
             android:visibility="gone" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:minHeight="52dp"
+            android:layout_marginTop="16dp"
+            android:minHeight="56dp"
             android:text="@string/login_button" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:text="@string/login_demo_hint"
-            android:textAppearance="?attr/textAppearanceBodySmall"
-            android:textColor="@color/text_secondary" />
-
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
     </LinearLayout>
 </ScrollView>

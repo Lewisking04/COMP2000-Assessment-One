@@ -2,13 +2,13 @@ package com.example.roombooking;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.appbar.MaterialToolbar;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
-/** Free rooms screen. Only rooms free for the chosen slot are listed. */
+/** Free rooms screen. Lists the rooms free for the chosen slot, which arrives as Intent extras. */
 public class FreeRoomsActivity extends AppCompatActivity {
 
     private static final DateTimeFormatter SHORT_DAY = DateTimeFormatter.ofPattern("EEE d MMM", Locale.UK);
@@ -25,9 +25,7 @@ public class FreeRoomsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_free_rooms);
-
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         LocalDate date = LocalDate.parse(getIntent().getStringExtra(Extras.DATE));
         LocalTime start = LocalTime.parse(getIntent().getStringExtra(Extras.START));
@@ -42,19 +40,28 @@ public class FreeRoomsActivity extends AppCompatActivity {
         TextView tvCount = findViewById(R.id.tv_count);
         tvCount.setText(getString(R.string.rooms_free_count, free.size(), DemoData.ROOMS.size()));
         TextView tvEmpty = findViewById(R.id.tv_empty);
-        tvEmpty.setVisibility(free.isEmpty() ? TextView.VISIBLE : TextView.GONE);
+        tvEmpty.setVisibility(free.isEmpty() ? View.VISIBLE : View.GONE);
 
         RoomAdapter adapter = new RoomAdapter(room -> {
-            Intent i = new Intent(this, ConfirmRequestActivity.class);
+            Intent i = new Intent(FreeRoomsActivity.this, ConfirmRequestActivity.class);
             i.putExtra(Extras.DATE, date.toString());
             i.putExtra(Extras.START, start.toString());
             i.putExtra(Extras.DURATION, minutes);
             i.putExtra(Extras.ROOM_ID, room.id);
             startActivity(i);
-        }, getString(R.string.request));
+        });
         RecyclerView list = findViewById(R.id.rooms_list);
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(adapter);
         adapter.submit(free);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {   // the Up arrow in the action bar
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
