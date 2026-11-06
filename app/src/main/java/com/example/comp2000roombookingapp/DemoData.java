@@ -60,15 +60,15 @@ public final class DemoData {
         // This employee's bookings. Dates are worked out from today so the data never goes out of date.
         BOOKINGS.add(new Booking(1, find("R3"), workday(today, 1), LocalTime.of(14, 0),
                 LocalTime.of(15, 0), EMPLOYEE_NAME, "Team stand-up", Booking.Status.PENDING));
-        BOOKINGS.add(new Booking(2, find("S1"), workday(today, 2), LocalTime.of(10, 0),
+        BOOKINGS.add(new Booking(2, find("S1"), workday(today, 3), LocalTime.of(10, 0),
                 LocalTime.of(12, 0), EMPLOYEE_NAME, "Client workshop", Booking.Status.CONFIRMED));
-        BOOKINGS.add(new Booking(3, find("R5"), workday(today, 3), LocalTime.of(9, 0),
+        BOOKINGS.add(new Booking(3, find("R5"), workday(today, 4), LocalTime.of(9, 0),
                 LocalTime.of(10, 0), EMPLOYEE_NAME, "Planning", Booking.Status.CANCELLATION_REQUESTED));
         BOOKINGS.add(new Booking(4, find("R1"), today.minusDays(2), LocalTime.of(11, 0),
                 LocalTime.of(12, 0), EMPLOYEE_NAME, "Review", Booking.Status.CONFIRMED));
     }
 
-    // Moves forward by n working days (Monday to Friday), so the sample bookings never fall on a weekend.
+    // Returns the date n working days (Monday to Friday) after from, so sample bookings avoid weekends.
     private static LocalDate workday(LocalDate from, int n) {
         LocalDate d = from;
         int counted = 0;

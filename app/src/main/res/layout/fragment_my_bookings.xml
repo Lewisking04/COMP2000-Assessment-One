@@ -18,18 +18,18 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_weight="1"
+            android:text="@string/tab_upcoming"
             android:textColor="@color/nav_text_color"
-            app:backgroundTint="@color/nav_bg_tint"
-            android:text="@string/tab_upcoming" />
+            app:backgroundTint="@color/nav_bg_tint" />
 
         <Button
             android:id="@+id/btn_past"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_weight="1"
+            android:text="@string/tab_past"
             android:textColor="@color/nav_text_color"
-            app:backgroundTint="@color/nav_bg_tint"
-            android:text="@string/tab_past" />
+            app:backgroundTint="@color/nav_bg_tint" />
     </LinearLayout>
 
     <TextView

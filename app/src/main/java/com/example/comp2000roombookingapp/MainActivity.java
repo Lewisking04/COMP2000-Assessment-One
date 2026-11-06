@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    /** The selected button is darker with bold text. */
+    /** Selected state is a darker button and bold text */
     private void highlight(int tab) {
         btnFind.setSelected(tab == TAB_FIND);
         btnBookings.setSelected(tab == TAB_BOOKINGS);
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    // Runs when a menu item is tapped. We only have one: Log out.
+    // Runs when a menu item is tapped.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_logout) {
